@@ -3,11 +3,16 @@
 // SPDX-FileCopyrightText: 2024 ShadowCommander <shadowjjt@gmail.com>
 // SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 ReserveBot <211949879+ReserveBot@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 deltanedas <39013340+deltanedas@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 nazrin <tikufaev@outlook.com>
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared._DV.Silicons.Borgs; // DeltaV
+using Content.Shared.Access.Components; // DeltaV
 using Content.Shared.NameIdentifier;
 using Content.Shared.Preferences;
 using Content.Shared.Silicons.Borgs;
@@ -25,6 +30,7 @@ public sealed partial class BorgMenu : FancyWindow
     [Dependency] private readonly IEntityManager _entity = default!;
 
     public Action? BrainButtonPressed;
+    public Action? IdChipButtonPressed; // DeltaV
     public Action? EjectBatteryButtonPressed;
     public Action<string>? NameChanged;
     public Action<EntityUid>? RemoveModuleButtonPressed;
@@ -44,6 +50,15 @@ public sealed partial class BorgMenu : FancyWindow
 
         EjectBatteryButton.OnPressed += _ => EjectBatteryButtonPressed?.Invoke();
         BrainButton.OnPressed += _ => BrainButtonPressed?.Invoke();
+        // Begin DeltaV Additions - borg id chips
+        IdChipButton.OnPressed += _ => IdChipButtonPressed?.Invoke();
+        // predict the ejection
+        IdChipButtonPressed += () =>
+        {
+            IdChipButton.Text = Loc.GetString("borg-id-chip-missing");
+            IdChipButton.Disabled = true;
+        };
+        // End DeltaV Additions
 
         NameLineEdit.OnTextChanged += OnNameChanged;
         NameLineEdit.OnTextEntered += OnNameEntered;
@@ -56,6 +71,7 @@ public sealed partial class BorgMenu : FancyWindow
     {
         Entity = entity;
         BorgSprite.SetEntity(entity);
+        UpdateIdChipButton(); // DeltaV
 
         if (_entity.TryGetComponent<NameIdentifierComponent>(Entity, out var nameIdentifierComponent))
         {
@@ -89,6 +105,7 @@ public sealed partial class BorgMenu : FancyWindow
             ("charge", (int) MathF.Round(state.ChargePercent * 100)));
 
         UpdateBrainButton();
+        UpdateIdChipButton(); // DeltaV
         UpdateModulePanel();
     }
 
@@ -108,6 +125,30 @@ public sealed partial class BorgMenu : FancyWindow
             BrainButton.Disabled = true;
             BrainView.Visible = false;
             BrainButton.RemoveStyleClass(StyleBase.ButtonOpenLeft);
+        }
+    }
+
+    /// <summary>
+    /// DeltaV: Updates the Eject ID Chip button text and enabled status.
+    /// </summary>
+    private void UpdateIdChipButton()
+    {
+        if (!_entity.TryGetComponent<IdChipSlotComponent>(Entity, out var comp))
+        {
+            IdChipButton.Visible = false;
+            return;
+        }
+
+        if (comp.Chip is {} chip && _entity.TryGetComponent<IdCardComponent>(chip, out var card))
+        {
+            // not using the chip's entity name as that would immediately out syndie id chips
+            IdChipButton.Text = Loc.GetString("borg-id-chip-installed", ("name", card.FullName ?? ""));
+            IdChipButton.Disabled = false;
+        }
+        else
+        {
+            IdChipButton.Text = Loc.GetString("borg-id-chip-missing");
+            IdChipButton.Disabled = true;
         }
     }
 

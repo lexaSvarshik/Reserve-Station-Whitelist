@@ -1,0 +1,18 @@
+- type: entity
+  parent: [ ClothingOuterHardsuitSyndicateDurathread, ClothingOuterBaseToggleable ]
+  id: ClothingOuterHardsuitRoboNeurotisist
+  name: robo-neuroticist softshell suit
+  description: "Dramatic cape, stylish collar, and packed to the gills with life support tech"
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/OuterClothing/Suits/eva_roboneuroticist.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/OuterClothing/Suits/eva_roboneuroticist.rsi
+  - type: ToggleableClothing
+    clothingPrototypes:
+      head: ClothingHeadHelmetRoboNeuroticist
+  - type: ClothingAutoInject # there's a "life support tech" after all.
+    reagents:
+      Epinephrine: 10
+      Bicaridine: 10
+      TranexamicAcid: 5

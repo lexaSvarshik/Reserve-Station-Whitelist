@@ -1,0 +1,21 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitRoboNeuroticist
+  name: robo-neuroticist's jumpsuit
+  description: A suit fit with dozens of cybernetic gadgets.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/roboneuroticistpurple.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/roboneuroticistpurple.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformCybersunAttorney
+  name: cybersun attorney suit
+  description: This durable Suit Jacket and Turtleneck Combo doubles as an Accounting suit, and includes an extra button. Take that, Nerd-otrasen!
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cybersunattorney.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/cybersunattorney.rsi

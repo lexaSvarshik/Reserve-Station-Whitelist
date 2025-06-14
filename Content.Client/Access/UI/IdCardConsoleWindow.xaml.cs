@@ -17,7 +17,13 @@
 // SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 Aiden <aiden@djkraz.com>
 // SPDX-FileCopyrightText: 2025 BombasterDS2 <shvalovdenis.workmail@gmail.com>
+// SPDX-FileCopyrightText: 2025 ReserveBot <211949879+ReserveBot@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Svarshik <96281939+lexaSvarshik@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 csqrb <56765288+CaptainSqrBeard@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 deltanedas <39013340+deltanedas@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 echotry <xippl1@mail.ru>
 // SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
+// SPDX-FileCopyrightText: 2025 nazrin <tikufaev@outlook.com>
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -60,6 +66,8 @@ namespace Content.Client.Access.UI
 
         // The job that will be picked if the ID doesn't have a job on the station.
         private static ProtoId<JobPrototype> _defaultJob = "Passenger";
+
+        public event Action<ProtoId<AccessLevelPrototype>>? OnToggleAccess; // DeltaV
 
         public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager,
             List<ProtoId<AccessLevelPrototype>> accessLevels)
@@ -126,7 +134,8 @@ namespace Content.Client.Access.UI
 
             foreach (var (id, button) in _accessButtons.ButtonsList)
             {
-                button.OnPressed += _ => SubmitData();
+                var copied = id; // DeltaV
+                button.OnPressed += _ => OnToggleAccess?.Invoke(id);
             }
 
             // Reserve-IDConsoleActions-Start
@@ -278,22 +287,21 @@ namespace Content.Client.Access.UI
                 FullNameLineEdit.Text,
                 JobTitleLineEdit.Text,
                 // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
-                _accessButtons.ButtonsList.Where(x => x.Value.Pressed).Select(x => x.Key).ToList(),
+                [], // DeltaV - don't send list of accesses
                 jobProtoDirty ? _jobPrototypeIds[JobPresetOptionButton.SelectedId] : string.Empty);
         }
 
         // Reserve-IDConsoleActions-Start
         private void ActionGiveAllAccess()
         {
-            foreach (var button in _accessButtons.ButtonsList.Values)
+            foreach (var (id, button) in _accessButtons.ButtonsList)
             {
-                if (!button.Disabled && button.Pressed == false)
+                if (!button.Disabled && !button.Pressed)
                 {
+                    OnToggleAccess?.Invoke(id);
                     button.Pressed = true;
                 }
             }
-
-            SubmitData();
         }
 
         private void AddAccessGroup(AccessGroupPrototype? group)
@@ -306,47 +314,56 @@ namespace Content.Client.Access.UI
 
             foreach (var pair in _accessButtons.ButtonsList)
             {
-                if (group.Tags.Contains(pair.Key))
+                if (group.Tags.Contains(pair.Key) && !pair.Value.Disabled && !pair.Value.Pressed)
                 {
-                    if (!pair.Value.Disabled && pair.Value.Pressed == false)
-                    {
-                        pair.Value.Pressed = true;
-                    }
+                    OnToggleAccess?.Invoke(pair.Key);
+                    pair.Value.Pressed = true;
                 }
             }
-            SubmitData();
         }
 
         public void SetJobAccess(JobPrototype job)
         {
-            ClearAllAccess();
+            // First switch off all non-work-related accesses
+            foreach (var (id, button) in _accessButtons.ButtonsList)
+            {
+                if (button.Pressed &&
+                    !job.Access.Contains(id) &&
+                    !job.AccessGroups.Any(g =>
+                        _prototypeManager.TryIndex(g, out AccessGroupPrototype? group) &&
+                        group.Tags.Contains(id)))
+                {
+                    OnToggleAccess?.Invoke(id);
+                    button.Pressed = false;
+                }
+            }
 
-            // this is a sussy way to do this
+            // Then we enable all the accesses we need for our work
             foreach (var access in job.Access)
             {
-                if (_accessButtons.ButtonsList.TryGetValue(access, out var button) && !button.Disabled)
+                if (_accessButtons.ButtonsList.TryGetValue(access, out var button) &&
+                    !button.Disabled && !button.Pressed)
                 {
+                    OnToggleAccess?.Invoke(access);
                     button.Pressed = true;
                 }
             }
 
             foreach (var group in job.AccessGroups)
             {
-                if (!_prototypeManager.TryIndex(group, out AccessGroupPrototype? groupPrototype))
+                if (_prototypeManager.TryIndex(group, out AccessGroupPrototype? groupPrototype))
                 {
-                    continue;
-                }
-
-                foreach (var access in groupPrototype.Tags)
-                {
-                    if (_accessButtons.ButtonsList.TryGetValue(access, out var button) && !button.Disabled)
+                    foreach (var access in groupPrototype.Tags)
                     {
-                        button.Pressed = true;
+                        if (_accessButtons.ButtonsList.TryGetValue(access, out var button) &&
+                            !button.Disabled && !button.Pressed)
+                        {
+                            OnToggleAccess?.Invoke(access);
+                            button.Pressed = true;
+                        }
                     }
                 }
             }
-
-            SubmitData();
         }
 
         public void ResetToDefaultJobAccess()

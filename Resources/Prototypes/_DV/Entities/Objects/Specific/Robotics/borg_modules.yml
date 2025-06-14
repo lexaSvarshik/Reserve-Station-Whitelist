@@ -1,0 +1,121 @@
+- type: entity
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  id: BaseBorgModuleSyndie
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: icon-syndicate
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#FF0000"
+      - state: base-module-inhand-left
+        color: "#891417"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#7B0F12"
+      right:
+      - state: base-icon-inhand-right
+        color: "#FF0000"
+      - state: base-module-inhand-right
+        color: "#891417"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+        color: "#7B0F12"
+
+- type: entity
+  parent: BorgModuleMartyr
+  id: BorgModuleMartyrDud
+  name: unfinished martyr cyborg module
+  description: This unfinished module has a large space for an explosive payload, with "boom" helpfully scribbled under it.
+  components:
+  - type: ItemBorgModule
+    items:
+    - SelfDestructSeqDud
+  - type: Construction
+    node: start
+    defaultTarget: live
+
+- type: entity
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  id: BorgModuleRadioJammerRecharging # locked behind Syndie exofab
+  description: "A module that comes with a recharging radio jammer."
+  name: radio jammer cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: icon-syndicate
+  - type: ItemBorgModule
+    moduleId: RadioJammer
+    items:
+    - RechargingRadioJammer
+
+- type: entity
+  parent: BaseBorgModuleSyndie
+  id: BorgModuleBlades # locked behind Syndie exofab
+  name: blade cyborg module
+  description: "A module that comes with enough knives to poke your eye out."
+  components:
+  - type: ItemBorgModule
+    moduleId: Blade
+    items:
+    - Cutlass
+    - BarberScissors
+    - Crowbar
+    - KnifePlastic
+
+- type: entity
+  parent: BaseBorgModuleSyndie
+  id: BorgModuleCHIMP # locked behind Syndie exofab
+  name: Experimental C.H.I.M.P. cyborg module
+  description: "A module that comes with an unrechargable experimental C.H.I.M.P. handcannon. Cheap and disposable."
+  components:
+  - type: ItemBorgModule
+    moduleId: Chimp
+    items:
+    - WeaponPistolCHIMPUpgraded
+
+- type: entity
+  parent: [ BaseBorgModuleSyndie, ClothingEyesHudSyndicate]
+  id: BorgModuleSyndicateRadio # locked behind Syndie exofab
+  name: syndicate radio cyborg module
+  description: "A module that comes with a syndicate handheld radio and PDA."
+  components:
+  - type: ItemBorgModule
+    moduleId: SyndicateRadio
+    items:
+    - RadioHandheldSyndicate
+    - SyndiPDA
+  - type: ShowSyndicateIcons
+  - type: ShowJobIcons
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
+    - Inorganic
+    - Silicon
+
+- type: entity
+  parent: BaseBorgModuleSyndie
+  id: BorgModuleCrewMonitor # locked behind Syndie exofab
+  name: crew monitoring module
+  description: "A module that comes with a crew monitor."
+  components:
+  - type: ItemBorgModule
+    moduleId: CrewMonitor
+    items:
+    - HandheldCrewMonitorRecharging #todo change
+
+- type: entity
+  parent: BaseBorgModuleSyndie
+  id: BorgModuleChameleonProjector # locked behind Syndie exofab
+  name: chameleon projector module
+  description: "A module used to create a hard-light replica of any object around you."
+  components:
+  - type: ItemBorgModule
+    moduleId: ChameleonProjector
+    items:
+    - ChameleonProjector

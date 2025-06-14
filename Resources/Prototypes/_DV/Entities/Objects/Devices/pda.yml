@@ -1,0 +1,26 @@
+# Misc
+
+- type: entity
+  parent: SyndiPDA
+  id: SyndiListeningPostPDA
+  components:
+  - type: Pda
+    id: SyndicateIDCard
+    penSlot:
+      startingItem: CyberPen
+      whitelist:
+        tags:
+        - Write
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType: !type:String
+        pda-syndi
+
+- type: entity
+  parent: SyndiPDA
+  id: RoboNeuroticistPDA
+  name: robo-neuroticist PDA
+  description: An elite PDA for an elite Operative. Bits of wire and grease poke from the chassis.
+  components:
+  - type: Pda
+    id: RoboNeuroticistIDCard

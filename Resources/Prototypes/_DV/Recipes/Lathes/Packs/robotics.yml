@@ -1,0 +1,26 @@
+## Static
+
+- type: latheRecipePack
+  id: RoboticsStaticDeltaV
+  recipes:
+  - IdChipBasic
+
+- type: latheRecipePack
+  id: RoboticsEmagStatic
+  recipes:
+  - IdChipSyndie
+
+- type: latheRecipePack
+  id: BorgModulesSyndicateStatic
+  recipes:
+  - BorgModuleSyndicateWeapon
+  - BorgModuleRadioJammerRecharging
+  - BorgModuleMartyr
+  - BorgModuleBlades
+  - BorgModuleCHIMP
+  - BorgModuleSyndicateRadio
+  - BorgModuleCrewMonitor
+  - SyndicateNeuroling
+  - BorgModuleOperative
+  - BorgModuleChameleonProjector
+  - IdChipRoboNeuroticist

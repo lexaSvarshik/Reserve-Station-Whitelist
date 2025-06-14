@@ -1,0 +1,111 @@
+# all kits should cost about ~100TC (if possible)
+- type: selectableSet
+  id: RoboNeuroticistCommander
+  name: roboneuroticist-set-commander-name
+  description: roboneuroticist-set-commander-description
+  sprite:
+    entity: ClothingMaskGasVoiceChameleon
+  content:
+  - ClothingMaskGasVoiceChameleon
+  - BorgModuleSyndicateWeaponAdvanced
+  - EncryptionKeyStationMaster
+  - SyndicatePersonalAI
+  - AgentIDCard
+  - RadioImplanter
+  - DeathRattleImplanter
+  - ClothingEyesNightVisionGogglesNukie
+  - CameraBug
+  - RemoteSignallerAdvanced
+  - BloodredCasette # sit and listen to music when borgs do all the job
+  - HandheldCrewMonitorRecharging
+
+- type: selectableSet
+  id: RoboNeuroticistSaboteur
+  name: roboneuroticist-set-saboteur-name
+  description: roboneuroticist-set-saboteur-description
+  sprite:
+    entity: PowerSink
+  content:
+  - PowerSink
+  - BorgModuleRCD
+  - BorgModuleRCD
+  - SyndicateJawsOfLife
+  - BorgModuleFlamingAxe
+  - ClothingBackpackDuffelSyndicateC4tBundle
+  - ElectricalDisruptionKit
+  - ClothingHandsGlovesColorYellow
+
+- type: selectableSet
+  id: RoboNeuroticistMechanic
+  name: roboneuroticist-set-mechanic-name
+  description: roboneuroticist-set-mechanic-description
+  sprite:
+    entity: ClothingBeltChiefEngineerFilled
+  content:
+  - ClothingBackpackDuffelSyndicateEliteHardsuitBundle
+  - ClothingBeltChiefEngineerFilled
+  - SmokeImplanter #to fix borgs in smoke
+
+- type: selectableSet
+  id: RoboNeuroticistInfiltrator
+  name: roboneuroticist-set-infiltrator-name
+  description: roboneuroticist-set-infiltrator-description
+  sprite:
+    entity: BorgChassisSyndicateSaboteur
+  content:
+  - PlayerBorgSyndicateSaboteurGhostRole #TC heavy, no clue how much exactly. >100 already ig
+  - BorgModuleEsword
+  - BorgModuleRCD
+  - BorgModuleChameleonProjector
+
+- type: selectableSet
+  id: RoboNeuroticistWarmonger
+  name: roboneuroticist-set-warmonger-name
+  description: roboneuroticist-set-warmonger-description
+  sprite:
+    entity: BorgChassisSyndicateAssault
+  content:
+  - PlayerBorgSyndicateAssaultGhostRole #375 TC :troll:
+  - ClothingUniformJumpsuitOperative
+  - ClothingNeckScarfStripedSyndieRed
+  - ClothingHeadHatOutlawHat #stylish evil men
+
+#why does this even exists
+- type: selectableSet
+  id: RoboNeuroticistClown
+  name: roboneuroticist-set-clown-name
+  description: roboneuroticist-set-clown-description
+  sprite:
+    entity: ClothingMaskClown
+  content:
+  - ClothingOuterHardsuitClown
+  - ClothingHeadHatJesterAlt
+  - BorgChassisService
+  - BorgModuleClowning
+  - SoapOmega
+  - ClothingBackpackDuffelSyndicateCostumeClown
+  - MobJonkBot
+  - HappyHonk
+  - FoodPieBananaCream
+  - BananiumSword
+  - ClothingBackpackERTClown
+  - SadTromboneImplanter
+  - LauncherCreamPieRegenerating
+
+- type: selectableSet
+  id: RoboNeuroticistDoctor
+  name: roboneuroticist-set-doctor-name
+  description: roboneuroticist-set-doctor-description
+  sprite:
+    entity: PlayerBorgSyndicateMedicalBattery
+  content:
+  - PlayerBorgSyndicateMedicalGhostRole
+  - BluespaceBeaker
+  - ChemistryBottleNocturine
+  - ChemistryBottleOmnizine
+  - ChemistryBottleOmnizine
+  - ChemistryBottleLead
+  - ChemistryBottleEphedrine
+  - ChemistryBottleOxycodone
+  - ClothingEyesHudSyndicateAgent
+  - CigPackSyndicate

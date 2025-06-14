@@ -2,9 +2,13 @@
 // SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
 // SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 ReserveBot <211949879+ReserveBot@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 deltanedas <39013340+deltanedas@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 nazrin <tikufaev@outlook.com>
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._DV.Silicons.Borgs; // DeltaV
 using Content.Shared.Silicons.Borgs;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -32,6 +36,7 @@ public sealed class BorgBoundUserInterface : BoundUserInterface
         {
             SendMessage(new BorgEjectBrainBuiMessage());
         };
+        _menu.IdChipButtonPressed += () => SendMessage(new BorgEjectIdChipMessage()); // DeltaV
 
         _menu.EjectBatteryButtonPressed += () =>
         {
