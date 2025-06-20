@@ -13,3 +13,4 @@ id-card-console-verb-added = добавлено
 id-card-console-verb-removed = убрано
 id-card-console-prefix-to = на
 id-card-console-prefix-from = с
+id-card-console-damaged = Повреждение структурной целостности, выброс содержимого.

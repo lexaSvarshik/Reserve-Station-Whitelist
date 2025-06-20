@@ -25,3 +25,4 @@ id-card-console-verb-added = added
 id-card-console-verb-removed = removed
 id-card-console-prefix-to = to
 id-card-console-prefix-from = from
+id-card-console-damaged = Structural integrity compromised, ejecting contents.
