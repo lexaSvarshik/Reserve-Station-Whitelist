@@ -72,11 +72,8 @@ namespace Content.Server.GameTicking
             {
                 if (args.NewStatus != SessionStatus.Disconnected)
                 {
-                    mind.Session = session;
                     _pvsOverride.AddSessionOverride(mindId.Value, session);
                 }
-
-                DebugTools.Assert(mind.Session == session);
             }
 
             DebugTools.Assert(session.GetMind() == mindId);
@@ -104,7 +101,6 @@ namespace Content.Server.GameTicking
 
                     //ADT tweak begin
                     var creationDate = "Unable to get account creation date";
-                    var main = await _locator.LookupIdAsync(args.Session.UserId); //Reserve edit
                     try
                         {
                             // Получаем дату создания аккаунта через API визардов
@@ -135,7 +131,7 @@ namespace Content.Server.GameTicking
                         {
                             Content = Loc.GetString("player-first-join-message-webhook", ("name", args.Session.Name)) + "\n" +
                             Loc.GetString("player-first-join-account-date", ("creationDate", creationDate)) + "\n" + //Reserve edit
-                            $"userid: {main?.Username ?? "unknown"}" //Reserve edit
+                            $"userid: {args.Session.UserId.ToString()}" //Reserve edit
                         };
                         var identifier = webhookData.ToIdentifier();
                         await _discord.CreateMessage(identifier, payload);
@@ -198,10 +194,9 @@ namespace Content.Server.GameTicking
                 case SessionStatus.Disconnected:
                 {
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
-                    if (mind != null)
+                    if (mindId != null)
                     {
-                        _pvsOverride.ClearOverride(GetNetEntity(mindId!.Value));
-                        mind.Session = null;
+                        _pvsOverride.RemoveSessionOverride(mindId.Value, session);
                     }
 
                     if (_playerGameStatuses.ContainsKey(session.UserId)) // Goobstation - Queue
